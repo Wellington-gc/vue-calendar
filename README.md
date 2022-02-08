@@ -1,4 +1,4 @@
-# calendar-codelitt
+# codelitt-calendar
 
 ## Project setup
 ```
