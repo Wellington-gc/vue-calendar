@@ -15,6 +15,8 @@
         :is-today="day.date === today"
       />
     </ol>
+
+    <Reminder />
   </div>
 </template>
 
@@ -26,6 +28,7 @@ import DateIndicator from "./DateIndicator.vue";
 import DateSelector from "./DateSelector.vue";
 import CalendarWeekdays from "./CalendarWeekdays.vue";
 import MonthDayItem from "./MonthDayItem.vue";
+import Reminder from "./Reminder.vue";
 
 dayjs.extend(weekday);
 dayjs.extend(weekOfYear);
@@ -33,7 +36,13 @@ dayjs.extend(weekOfYear);
 export default {
   name: "CalendarMonth",
 
-  components: { DateIndicator, DateSelector, CalendarWeekdays, MonthDayItem },
+  components: {
+    DateIndicator,
+    DateSelector,
+    CalendarWeekdays,
+    MonthDayItem,
+    Reminder,
+  },
 
   computed: {
     days() {
@@ -56,17 +65,24 @@ export default {
       return Number(this.$store.getters.day.format("YYYY"));
     },
 
-    numberOfDaysInMonth() {
+    daysInMonth() {
       return dayjs(this.$store.getters.day).daysInMonth();
     },
 
     currentMonthDays() {
-      return [...Array(this.numberOfDaysInMonth)].map((day, index) => {
+      return [...Array(this.daysInMonth)].map((day, index) => {
         return {
           date: dayjs(`${this.year}-${this.month}-${index + 1}`).format(
             "YYYY-MM-DD"
           ),
           isCurrentMonth: true,
+          reminders: this.$store.getters.reminders.filter(
+            (_) =>
+              _.date ===
+              dayjs(`${this.year}-${this.month}-${index + 1}`).format(
+                "YYYY-MM-DD"
+              )
+          ),
         };
       });
     },

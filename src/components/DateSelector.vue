@@ -1,8 +1,8 @@
 <template>
   <div class="date-selector">
-    <button @click="selectPrevious">-</button>
-    <button @click="selectCurrent">Today</button>
-    <button @click="selectNext">+</button>
+    <button class="alter-btn" @click="selectPrevious">-</button>
+    <button class="reset-btn" @click="selectCurrent">Today</button>
+    <button class="alter-btn" @click="selectNext">+</button>
   </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
     },
 
     selectNext() {
-      this.$store.commit('increment');
+      this.$store.commit("increment");
     },
   },
 };
@@ -29,14 +29,40 @@ export default {
 <style>
 .date-selector {
   display: flex;
-  justify-content: space-between;
-  width: 80px;
-  color: var(--grey-800);
-  gap: 10px;
+  gap: 15px;
 }
 
-.date-selector > * {
+.alter-btn {
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  font-size: 20px;
+  font-weight: 100;
+  background-color: #fff;
+  border: 1px solid #3e4e63;
+  border-radius: 5px;
   cursor: pointer;
-  user-select: none;
+}
+
+.alter-btn:hover {
+  background-color: #3e4e63;
+  color: white;
+}
+
+.reset-btn {
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 100;
+  background-color: #fff;
+  border: 1px solid #3e4e63;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 0px 15px;
+}
+
+.reset-btn:hover {
+  background-color: #3e4e63;
+  color: white;
 }
 </style>
