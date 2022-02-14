@@ -16,7 +16,10 @@
       />
     </ol>
 
-    <Reminder />
+    <div class="reminders-container">
+      <Reminder />
+      <ListReminders v-if="reminders.length > 0" :reminders="reminders" />
+    </div>
   </div>
 </template>
 
@@ -29,6 +32,7 @@ import DateSelector from "./DateSelector.vue";
 import CalendarWeekdays from "./CalendarWeekdays.vue";
 import MonthDayItem from "./MonthDayItem.vue";
 import Reminder from "./Reminder.vue";
+import ListReminders from "./ListReminders.vue";
 
 dayjs.extend(weekday);
 dayjs.extend(weekOfYear);
@@ -42,6 +46,7 @@ export default {
     CalendarWeekdays,
     MonthDayItem,
     Reminder,
+    ListReminders,
   },
 
   computed: {
@@ -67,6 +72,12 @@ export default {
 
     daysInMonth() {
       return dayjs(this.$store.getters.day).daysInMonth();
+    },
+
+    reminders() {
+      return this.$store.getters.reminders.filter(
+        (_) => _.date === this.$store.getters.selectedDate
+      );
     },
 
     currentMonthDays() {
@@ -151,7 +162,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .calendar-month {
   position: relative;
   background-color: var(--grey-200);
@@ -183,5 +194,12 @@ export default {
   grid-column-gap: var(--grid-gap);
   grid-row-gap: var(--grid-gap);
   border-top: solid 1px var(--grey-200);
+}
+
+.reminders-container {
+  display: flex;
+  gap: 5px;
+  position: relative;
+  justify-content: space-evenly;
 }
 </style>

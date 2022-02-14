@@ -8,7 +8,14 @@ export const store = new Vuex.Store({
     state: {
         day: dayjs(),
         selectedDate: dayjs().format('YYYY-MM-DD'),
-        reminders: []
+        reminders: [],
+        selectedReminder: {
+            id: '',
+            title: '',
+            description: '',
+            backgroundColor: '',
+            textColor: '',
+        },
     },
     mutations: {
         increment(state) {
@@ -23,9 +30,15 @@ export const store = new Vuex.Store({
         setReminders(state, reminder) {
             state.reminders.push(reminder);
         },
+        deleteReminder(state, id) {
+            state.reminders = state.reminders.filter(item => item.id !== id);
+        },
         selectDate(state, date) {
             state.selectedDate = date;
-        }
+        },
+        selectReminder(state, reminder) {
+            state.selectedReminder = reminder;
+        },
     },
     getters: {
         day: state => state.day,
@@ -33,6 +46,7 @@ export const store = new Vuex.Store({
         reminders: state => {
             const currentMonth = state.day.format('YYYY-MM');
             return state.reminders.filter(reminder => reminder.date.slice(0, 7) === currentMonth);
-        }
+        },
+        selectedReminder: state => state.selectedReminder,
     }
 });

@@ -12,12 +12,26 @@
     <div class="container-body">
       <div class="form-reminder">
         <span>Title: </span>
-        <input class="input-data" v-model="title" type="text" />
+        <input
+          class="input-data"
+          v-model="title"
+          type="text"
+          required
+          placeholder="Insert title here..."
+          maxlength="32"
+        />
       </div>
 
       <div class="form-reminder">
         <span>Description: </span>
-        <input class="input-data" v-model="description" type="text" />
+        <input
+          class="input-data"
+          v-model="description"
+          type="text"
+          required
+          placeholder="Insert description here..."
+          maxlength="100"
+        />
       </div>
 
       <div class="form-reminder">
@@ -61,20 +75,27 @@ export default {
 
   methods: {
     addReminder() {
-      this.$store.commit("setReminders", {
-        id: uuidv4(),
-        date: this.$store.getters.selectedDate,
-        title: this.title,
-        description: this.description,
-        backgroundColor: this.backgroundColor,
-        textColor: this.textColor,
-      });
+      if (this.title !== "") {
+        this.$store.commit("setReminders", {
+          id: uuidv4(),
+          date: this.$store.getters.selectedDate,
+          title: this.title,
+          description: this.description,
+          backgroundColor: this.backgroundColor,
+          textColor: this.textColor,
+        });
+      }
+
+      this.title = "";
+      this.description = "";
+      this.backgroundColor = "#FFFFFF";
+      this.textColor = "#000000";
     },
   },
 };
 </script>
 
-<style>
+<style scoped>
 .container {
   margin-top: 10px;
   display: flex;

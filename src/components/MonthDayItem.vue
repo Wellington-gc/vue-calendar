@@ -17,7 +17,11 @@
             color: reminder.textColor,
           }"
         >
-          {{ reminder.title }}
+          <span class="reminder-title">{{ reminder.title }}</span>
+
+          <button class="delete-button" @click="deleteReminder(reminder.id)">
+            X
+          </button>
         </div>
       </div>
     </div>
@@ -51,6 +55,10 @@ export default {
     addReminder(date) {
       this.$store.commit("selectDate", date);
     },
+
+    deleteReminder(id) {
+      this.$store.commit("deleteReminder", id);
+    },
   },
 
   computed: {
@@ -69,7 +77,7 @@ export default {
   background-color: #fff;
   color: var(--grey-800);
   padding: 5px;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .calendar-day:hover {
@@ -109,5 +117,20 @@ export default {
   margin-right: 20%;
   margin-bottom: 5px;
   border-radius: 5px;
+  padding: 5px;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.reminder-title {
+  font-size: 1.1rem;
+}
+
+.delete-button {
+  position: relative;
+}
+
+.delete-button:hover {
+  cursor: pointer;
 }
 </style>
